@@ -6,6 +6,11 @@ import { netlifyPlugin } from "@netlify/remix-edge-adapter/plugin";
 export default defineConfig({
   plugins: [remix(), netlifyPlugin(), tsconfigPaths()],
   ssr: {
-    external: ["node:crypto"], // Evita que Vite intente resolver "node:crypto"
+    external: ["node:crypto", "node:fs", "@remix-run/node"], //  Excluye módulos de Node.js
+  },
+  build: {
+    rollupOptions: {
+      external: ["node:crypto", "node:fs", "@remix-run/node"], // Evita que se empaqueten
+    },
   },
 });
